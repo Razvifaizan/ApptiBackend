@@ -16,7 +16,7 @@ router.get("/oauth", (req, res) => {
     return res.status(500).send("GitHub Client ID not configured");
   }
 
-  const redirect_uri = "http://localhost:5000/api/auth/github/callback"; // must match GitHub App settings
+  const redirect_uri = "https://apptibackend.onrender.com/api/auth/github/callback"; // must match GitHub App settings
   const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&scope=user:email&redirect_uri=${redirect_uri}`;
   
   res.redirect(githubAuthUrl);
