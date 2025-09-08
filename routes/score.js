@@ -1,9 +1,12 @@
 // routes/score.js
 import express from "express";
 import User from "../models/User.js";
-import TestResult from "../models/TestResult.js"; // ✅ TestResult model import karo
+import TestResult from "../models/TestResult.js";
+import nodemailer from "nodemailer"; // ✅ TestResult model import karo
 
 const router = express.Router();
+
+
 
 router.post("/send-score", async (req, res) => {
   try {
@@ -20,7 +23,7 @@ router.post("/send-score", async (req, res) => {
       totalQuestions,
       correctAnswers,
       wrongAnswers,
-      topicStats
+      topicStats,
     });
     await newResult.save();
 
@@ -29,18 +32,46 @@ router.post("/send-score", async (req, res) => {
     if (!user.highestScore || score > user.highestScore) {
       user.highestScore = score;
     }
-
     await user.save();
 
+    // ✅ Mail send karo
+    const transporter = nodemailer.createTransport({
+      service: "gmail", // ya smtp server
+      auth: {
+        user: process.env.EMAIL_USER, // apna gmail
+        pass: process.env.EMAIL_PASS, // app password (gmail settings se generate karna hoga)
+      },
+    });
+
+    const mailOptions = {
+      from: `"Test App" <${process.env.EMAIL_USER}>`,
+      to: user.email,
+      subject: "Your Test Result",
+      html: `
+        <h2>Hi ${user.name},</h2>
+        <p>Thank you for attempting the <b>Test</b>. Here are your results:</p>
+        <ul>
+          <li>Total Questions: ${totalQuestions}</li>
+          <li>Correct Answers: ${correctAnswers}</li>
+          <li>Wrong Answers: ${wrongAnswers}</li>
+          <li><b>Final Score: ${score} / ${totalQuestions}</b></li>
+        </ul>
+        <p>Keep practicing and improve your performance 💪</p>
+      `,
+    };
+
+    await transporter.sendMail(mailOptions);
+
     res.json({
-      message: "Score saved",
+      message: "Score saved & email sent",
       user,
-      attempt: newResult, // frontend ko last attempt ka record bhej diya
+      attempt: newResult,
     });
   } catch (err) {
-    console.error(err);
+    console.error("❌ Error in /send-score:", err);
     res.status(500).json({ error: err.message });
   }
 });
+
 
 export default router;
