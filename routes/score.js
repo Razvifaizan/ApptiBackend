@@ -1,6 +1,6 @@
 // routes/score.js
 import express from "express";
-import User from "../models/user.js";
+import User from "../models/User.js";
 import TestResult from "../models/TestResult.js"; // ✅ TestResult model import karo
 
 const router = express.Router();
