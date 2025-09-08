@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 import authRoutes from "./routes/auth.js";
 import questionRoutes from "./routes/question.js";
 import testRoutes from "./routes/test.js";
-import User from "./models/user.js"; // ✅ Model ka import sahi naam se
+import User from "./models/User.js"; 
 import scoreRoutes from "./routes/score.js";
 import TestResult from "./models/TestResult.js";
 import googleAuthRoutes from './routes/authRoutes.js'
