@@ -17,7 +17,11 @@ import githubAuthRoutes from './routes/githubAuthRoutes.js'
 dotenv.config();
 const app = express();
 
-app.use(cors());
+// app.use(cors());
+app.use(cors({
+  origin: ["http://localhost:5173", "https://yourfrontenddomain.com"],
+  credentials: true, // agar cookies / auth headers bhejne ho
+}));
 app.use(express.json());
 
 // ✅ User Profile Route
