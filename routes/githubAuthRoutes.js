@@ -93,7 +93,7 @@ router.get("/callback", async (req, res) => {
 
       // 👉 Redirect to frontend signup with newUser=true
       return res.redirect(
-        `http://localhost:5173/signup?token=${tempToken}&newUser=true`
+        `https://appuia.netlify.app/signup?token=${tempToken}&newUser=true`
       );
     }
 
