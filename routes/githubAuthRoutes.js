@@ -105,7 +105,7 @@ router.get("/callback", async (req, res) => {
     );
 
     // 👉 Redirect to dashboard with newUser=false
-    res.redirect(`http://localhost:5173/dashboard?token=${token}&newUser=false`);
+    res.redirect(`https://appuia.netlify.app/dashboard?token=${token}&newUser=false`);
   } catch (err) {
     console.error("GitHub OAuth failed:", err.response?.data || err.message);
     res.status(500).send("GitHub OAuth failed");
