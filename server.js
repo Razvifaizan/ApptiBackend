@@ -19,7 +19,7 @@ const app = express();
 
 // app.use(cors());
 app.use(cors({
-  origin: ["http://localhost:5173", "https://yourfrontenddomain.com"],
+  origin: ["https://appuia.netlify.app", "https://yourfrontenddomain.com"],
   credentials: true, // agar cookies / auth headers bhejne ho
 }));
 app.use(express.json());
